@@ -24,8 +24,8 @@ def main():
 		sys.exit('Usage: `python LCS.py < input`')
 	for l in sys.stdin:
 		A,B = l.split()
-		clcs = max(LCS(cut(A, i), B) for i in range(0, len(A)))
-	return clcs
+		print max(LCS(cut(A, i), B) for i in range(0, len(A)))
+	return
 
 if __name__ == '__main__':
 	main()
