@@ -16,14 +16,16 @@ def LCS(A,B):
 
 	return arr[m][n]
 
+def cut(str, index):
+	return str[index:] + str[0:index]
+
 def main():
 	if len(sys.argv) != 1:
 		sys.exit('Usage: `python LCS.py < input`')
-	
 	for l in sys.stdin:
 		A,B = l.split()
-		print LCS(A,B)
-	return
+		clcs = max(LCS(cut(A, i), B) for i in range(0, len(A)))
+	return clcs
 
 if __name__ == '__main__':
 	main()
