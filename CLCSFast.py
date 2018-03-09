@@ -6,7 +6,6 @@ arr = np.zeros((2048, 2048), dtype=int)
 # min_for_row = {}
 # max_for_row = {}
 
-
 def find_shortest_path(A, B, p, lower, upper): #p is a global variable for now
     if upper - lower <= 1:
         return
@@ -15,14 +14,10 @@ def find_shortest_path(A, B, p, lower, upper): #p is a global variable for now
     find_shortest_path(A, B, lower, mid)
     find_shortest_path(A, B, mid, upper)
 
-
 def single_shortest_path(A, B, mid, low_path, mid_path):
     return
 
-
-
-
-def backtrace_full_LCS(A, B): 
+def backtrace_full_LCS(A, B): #Maybe only use for path 0 case? Then write more elaborate method for boundary checking?
     m = len(A)
     n = len(B)
     while m > 0 and n > 0:
@@ -37,11 +32,6 @@ def backtrace_full_LCS(A, B):
         else:
             #BACKTRACE BY MOVING UP ON GRAPH. Update max for new row. 
             m -= 1
-
-
-
-
-
 
 def LCS(A, B):
     m = len(A)
@@ -63,7 +53,8 @@ def main():
     for l in sys.stdin:
         A, B = l.split()
         m = len(A)
-        p = [[] for i in range(0, 2m)]
+        p = [[] for i in range(0, m)]
+        #Update array for initialization, don't need to return anything from LCS
         LCS(A, B)
         p[0] = backtrace_full_LCS(A, B)
         A = A + A
