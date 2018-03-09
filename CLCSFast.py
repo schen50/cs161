@@ -9,14 +9,13 @@ def find_shortest_path(A, B, p, lower, upper): #p is a global variable for now
     if upper - lower <= 1:
         return
     mid = float(lower + upper)/2
-    paths[mid] = single_shortest_path(A, B, mid, paths[lower], paths[mid])
+    p[mid] = single_shortest_path(A, B, mid, p[lower], p[mid])
     find_shortest_path(A, B, lower, mid)
     find_shortest_path(A, B, mid, upper)
 
 
 def single_shortest_path(A, B, mid, low_path, mid_path):
     return 
-
 
 
 def LCS(A, B):
