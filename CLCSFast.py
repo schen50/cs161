@@ -19,25 +19,33 @@ def find_shortest_path(A, B, p, lower, upper): #p
 def single_shortest_path(A, B, mid, low_path, upper_path):
     return
 
+#[(Min for lower bound, max for upper bound)]
+
 def backtrace_full_LCS(A, B): #Maybe only use for path 0 case? Then write more elaborate method for boundary checking?
     m = len(A)
     n = len(B)
     lcs_length = 0
+    path = [(0,0) for i in range(0, m)]
     while m > 0 and n > 0:
         if A[m-1] == B[n-1]:
-            #BACTRACE BY MOVING DIAGONAL. We have max for new row in upper bound case
-                                            #and min for old row in lower bound
-            #min_for_row[m] = n --- STORE MAX index of ROW ARRAY to check (path bound)
+            path[m-1][1] = n-1 #new row in upper bound case
+            path[m][0] = n     #old row in lower bound case
+
             m = m - 1
             n = n - 1
             lcs_length += 1
+
+
         elif arr[m-1][n] < arr[m][n-1]:
             #BACKTRACE BY MOVING LEFT ON GRAPH. No updates necessary in upper bound case. 
                                                 #min for row updated in lower bound case
+            path[m][0] = n-1
             n -= 1
         else:
             #BACKTRACE BY MOVING UP ON GRAPH. Update max for new row in upper bound case. 
                                                 #update min for old row in lower bound case
+            path[m-1][1] = n #new row in upper bound case
+            path[m][0] = n #old row in lower bound case
             m -= 1
 
 def LCS(A, B):
