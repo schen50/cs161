@@ -22,15 +22,15 @@ def backtrace_full_LCS(A, B): #Maybe only use for path 0 case? Then write more e
     n = len(B)
     while m > 0 and n > 0:
         if A[m-1] == B[n-1]:
-            #BACTRACE BY MOVING DIAGONAL. We have max for new row, and min for old row
+            #BACTRACE BY MOVING DIAGONAL. We have max for new row in upper bound case
             #min_for_row[m] = n --- STORE MAX index of ROW ARRAY to check (path bound)
             m = m - 1
             n = n - 1
         elif arr[m-1][n] < arr[m][n-1]:
-            #BACKTRACE BY MOVING LEFT ON GRAPH. Update min for current row.
+            #BACKTRACE BY MOVING LEFT ON GRAPH. No updates necessary in upper bound case. 
             n -= 1
         else:
-            #BACKTRACE BY MOVING UP ON GRAPH. Update max for new row. 
+            #BACKTRACE BY MOVING UP ON GRAPH. Update max for new row in upper bound case. 
             m -= 1
 
 def LCS(A, B):
