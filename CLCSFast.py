@@ -6,31 +6,38 @@ arr = np.zeros((2048, 2048), dtype=int)
 # min_for_row = {}
 # max_for_row = {}
 
-def find_shortest_path(A, B, p, lower, upper): #p is a global variable for now
+#PATH  = [(L_Min0, U_Max0), (L_Min1, U_Max1), (L_Min2, U_Max2), ()]
+
+def find_shortest_path(A, B, p, lower, upper): #p
     if upper - lower <= 1:
         return
     mid = float(lower + upper)/2
-    p[mid] = single_shortest_path(A, B, mid, p[lower], p[mid])
+    p[mid] = single_shortest_path(A, B, mid, p[lower], p[upper])
     find_shortest_path(A, B, lower, mid)
     find_shortest_path(A, B, mid, upper)
 
-def single_shortest_path(A, B, mid, low_path, mid_path):
+def single_shortest_path(A, B, mid, low_path, upper_path):
     return
 
 def backtrace_full_LCS(A, B): #Maybe only use for path 0 case? Then write more elaborate method for boundary checking?
     m = len(A)
     n = len(B)
+    lcs_length = 0
     while m > 0 and n > 0:
         if A[m-1] == B[n-1]:
             #BACTRACE BY MOVING DIAGONAL. We have max for new row in upper bound case
+                                            #and min for old row in lower bound
             #min_for_row[m] = n --- STORE MAX index of ROW ARRAY to check (path bound)
             m = m - 1
             n = n - 1
+            lcs_length += 1
         elif arr[m-1][n] < arr[m][n-1]:
             #BACKTRACE BY MOVING LEFT ON GRAPH. No updates necessary in upper bound case. 
+                                                #min for row updated in lower bound case
             n -= 1
         else:
             #BACKTRACE BY MOVING UP ON GRAPH. Update max for new row in upper bound case. 
+                                                #update min for old row in lower bound case
             m -= 1
 
 def LCS(A, B):
@@ -56,7 +63,8 @@ def main():
         p = [[] for i in range(0, m)]
         #Update array for initialization, don't need to return anything from LCS
         LCS(A, B)
-        p[0] = backtrace_full_LCS(A, B)
+        p[0] = backtrace_full_LCS(A, B, p)
+        p[m] = p[0]
         A = A + A
         find_shortest_path(A, B, p, 0, m)
     return
