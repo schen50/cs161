@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 
-arr = np.zeros((12, 6), dtype=int)
+arr = np.zeros((12, 7), dtype=int)
 
 
 def find_shortest_path(A, B, p, lower, upper): #p
@@ -100,10 +100,11 @@ def main():
         p[0] = backtrace_full_LCS(A, B) + [[0,n] for i in range(0, m+1)]
         p[m] = [[0,n] for i in range(0, m+1)] + p[0]
         A = A + A
-        # print p[0]
-        # print p[m]
+        print p[0]
+        print p[m]
         # return
         find_shortest_path(A, B, p, 0, m)
+        break
     return
 
 
