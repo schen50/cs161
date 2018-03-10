@@ -12,6 +12,11 @@ def find_shortest_path(A, B, p, lower, upper): #p
     mid = (lower + upper)/2
     p[mid] = single_shortest_path(A, B, mid, p[lower], p[upper], lower, upper)
     p[m+mid] = [[0,n] for i in range(0, m+1)]
+
+    #
+    # TODO: UNCOMMENT BELOW ONCE PATHS ARE APPROPRIATELY STORED IN SINGLE_SHORTEST_PATH
+    #
+
     # find_shortest_path(A, B, p, lower, mid)
     # find_shortest_path(A, B, p, mid, upper)
 
@@ -22,6 +27,12 @@ def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
     n = len(B)
 
     print "BEFORE CLEAR: ", arr
+
+    #
+    #TODO: FIGURE OUT WHICH CLEARING IS NECESSARY (or if both are given odd/even case...)
+    #
+    #
+
     for i in range(0, n+1):
         arr[mid][i] = 0   #initialize early row of array. 
         arr[mid+1][i] = 0   #initialize early row of array. PROBABLY NOT NECESSARY BUT POTENTIALLY USEFUL until figuring out off-by-one-errors.
@@ -41,6 +52,11 @@ def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
                     arr[i][j] = arr[i][j-1]
     print "AFTER GUIDED DP: ", arr
 
+    #
+    #
+    #TODO: BACKTRACE AND STORE PATH
+    #
+    #
 
     return #WE NEED TO DO THE BACKTRACE TO GET THE PATH
 
