@@ -4,6 +4,12 @@ import numpy as np
 arr = np.zeros((12, 7), dtype=int)
 
 
+#
+#
+# To-Do not covered elsewhere: store lengths of paths/best path as we find it.
+#
+#
+
 def find_shortest_path(A, B, p, lower, upper): #p
     m = len(A)/2
     n = len(B)
@@ -120,6 +126,11 @@ def main():
         print p[m]
         # return
         find_shortest_path(A, B, p, 0, m)
+
+        #
+        #TODO: Take out break, print length of shortest path once we test.
+        #
+
         break
     return
 
