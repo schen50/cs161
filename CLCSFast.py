@@ -31,6 +31,7 @@ def find_shortest_path(A, B, p, lower, upper): #p
 def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
     m = len(A)/2
     n = len(B)
+    global arr
 
     print "BEFORE CLEAR: ", arr
 
@@ -38,15 +39,23 @@ def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
     #TODO: FIGURE OUT WHICH CLEARING IS NECESSARY (or if both are given odd/even case...)
     #
     #
-
+    global arr
+    #arr = np.zeros((12, 7), dtype=int)
     for i in range(0, n+1):
         arr[mid][i] = 0   #initialize early row of array. 
         arr[mid+1][i] = 0   #initialize early row of array. PROBABLY NOT NECESSARY BUT POTENTIALLY USEFUL until figuring out off-by-one-errors.
 
     print "AFTER CLEAR: ", arr
-
+    print bottom_path, top_path
+    #print "MID: ", mid
     for i in range(mid+1, m+mid+1):
-        for j in range(bottom_path[i][0] + 1, top_path[i][1]+1): #+1 since col 0 is not used
+
+        #print bottom_path[i][0]+1, top_path[i][1]
+
+        for j in range(bottom_path[i][0] , top_path[i][1]+1): #+1 since col 0 is not used
+
+            if i == 5:
+                print "I = 5, j = ", j
             if A[i - 1] == B[j - 1] and (bottom_path[i-1][0] <= j - 1 <= top_path[i-1][1]):    # and in bounds ):
                 arr[i][j] = arr[i - 1][j - 1] + 1
             else:
@@ -112,6 +121,8 @@ def main():
         sys.exit('Usage: `python LCS.py < input`')
 
     for l in sys.stdin:
+        
+        #A, B = "ACTCA", "TCGACG"
         A, B = l.split()
     
         m = len(A)
@@ -120,7 +131,7 @@ def main():
         #Update array for initialization, don't need to return anything from LCS
         LCS(A, B)
         p[0] = backtrace_full_LCS(A, B) + [[0,n] for i in range(0, m+1)]
-        p[m] = [[0,n] for i in range(0, m+1)] + p[0]
+        p[m] = [[0,n] for i in range(0, m)] + p[0]
         A = A + A
         print p[0]
         print p[m]
