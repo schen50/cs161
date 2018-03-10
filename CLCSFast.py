@@ -12,9 +12,12 @@ max_lcs_length = 0
 def find_shortest_path(A, B, p, lower, upper): #p
     m = len(A)/2
     n = len(B)
+    #print "BEFORE"
     if upper - lower <= 1:
+        #print "MIDDLE"
         #print max_lcs_length
         return
+    #print "AFTER"
     mid = (lower + upper)/2
     p[mid] = single_shortest_path(A, B, mid, p[lower], p[upper], lower, upper)
     p[m+mid] = [[0,n] for i in range(0, m)] + p[mid]
@@ -121,6 +124,8 @@ def backtrace_full_LCS(A, B): #Maybe only use for path 0 case? Then write more e
             path[m-1][1] = n #new row in upper bound case
             path[m][0] = n #old row in lower bound case
             m -= 1
+    global max_lcs_length
+    max_lcs_length = lcs_length
     return path
 
 def LCS(A, B):
@@ -128,12 +133,10 @@ def LCS(A, B):
     n = len(B)
     for i in range(1, m + 1):
         for j in range(1, n + 1):
-            #print A[i-1], "  ", B[i-1], " LCS"
             if A[i - 1] == B[j - 1]:
                 arr[i][j] = arr[i - 1][j - 1] + 1
             else:
                 arr[i][j] = max(arr[i - 1][j], arr[i][j - 1])
-    #print arr
     return arr[m][n]
 
 
@@ -147,7 +150,7 @@ def main():
         global max_lcs_length
         max_lcs_length = 0
         A, B = l.split()
-    
+       # A, B = "C", "CDCC"
         m = len(A)
         n = len(B)
         p = [[] for i in range(0, 2*m)]
@@ -157,6 +160,7 @@ def main():
         p[m] = [[0,n] for i in range(0, m)] + p[0]
         A = A + A
         # return
+
         find_shortest_path(A, B, p, 0, m)
 
         #
