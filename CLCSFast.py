@@ -17,7 +17,7 @@ def find_shortest_path(A, B, p, lower, upper): #p
         return
     mid = (lower + upper)/2
     p[mid] = single_shortest_path(A, B, mid, p[lower], p[upper], lower, upper)
-    p[m+mid] = [[0,n] for i in range(0, m+1)]
+    p[m+mid] = [[0,n] for i in range(0, m)] + p[mid]
 
     #
     # TODO: UNCOMMENT BELOW ONCE PATHS ARE APPROPRIATELY STORED IN SINGLE_SHORTEST_PATH
@@ -42,8 +42,10 @@ def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
     global arr
     #arr = np.zeros((12, 7), dtype=int)
     for i in range(0, n+1):
+        arr[mid-1][i] = 0 
         arr[mid][i] = 0   #initialize early row of array. 
         arr[mid+1][i] = 0   #initialize early row of array. PROBABLY NOT NECESSARY BUT POTENTIALLY USEFUL until figuring out off-by-one-errors.
+        #arr[mid+2][i] = 0 
 
     print "AFTER CLEAR: ", arr
     print bottom_path, top_path
@@ -52,7 +54,7 @@ def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
 
         #print bottom_path[i][0]+1, top_path[i][1]
 
-        for j in range(bottom_path[i][0] , top_path[i][1]+1): #+1 since col 0 is not used
+        for j in range(bottom_path[i][0], top_path[i][1]+1): #+1 since col 0 is not used
 
             if i == 5:
                 print "I = 5, j = ", j
