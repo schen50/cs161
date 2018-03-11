@@ -68,11 +68,11 @@ def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
                     arr[i][j] = max(arr[i - 1][j], arr[i][j - 1])
                 elif (bottom_path[i][0] <= j - 1): #Left in bounds but not up or diagnoal
                     arr[i][j] = arr[i][j - 1]
-                else:# (bottom_path[i-1][0] <= j <= top_path[i-1][1]): #up in bounds but not left
+                elif (bottom_path[i-1][0] <= j <= top_path[i-1][1]): #up in bounds but not left
                     arr[i][j] = arr[i - 1][j]
-                # else:
-                #     print j, bottom_path[i-1][0], top_path[i-1][1], bottom_path[i][0], top_path[i][1]
-                #     #print "NO VALID CASE?"
+                #else:
+                    #print j, bottom_path[i-1][0], top_path[i-1][1], bottom_path[i][0], top_path[i][1]
+                    #print "NO VALID CASE?"
         #     else:
         #         #TODO: ADD BOUND CHECKING BASED ON LOWER AND UPPER PATHS
         #         if (bottom_path[i-1][0] <= j <= top_path[i-1][1]):
