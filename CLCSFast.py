@@ -112,13 +112,15 @@ def main():
         sys.exit('Usage: `python LCS.py < input`')
 
     for l in sys.stdin:
-        global arr 
-        arr = np.zeros((4001, 4001), dtype=int)
+        
         global max_lcs_length
         max_lcs_length = 0
         A, B = l.split()
         m = len(A)
         n = len(B)
+        global arr 
+        #arr = np.zeros((4001, 4001), dtype=int)
+        arr = np.zeros((2*m+1, n+1), dtype=int)
         if m == 0 or n == 0:
             print 0
             continue
