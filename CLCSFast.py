@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 
-arr = np.zeros((16, 16), dtype=int)
+arr = np.zeros((4001, 4001), dtype=int)
 max_lcs_length = 0
 
 
