@@ -1,27 +1,17 @@
 import sys
 import numpy as np
-import pdb
 
 arr = np.zeros((16, 16), dtype=int)
 max_lcs_length = 0
 
-#
-#
-# To-Do not covered elsewhere: store lengths of paths/best path as we find it.
-#
-#
 
 def find_shortest_path(A, B, p, lower, upper): 
     if upper - lower <= 1:
-        #print "MIDDLE"
         return
-    #print "AFTER"
     mid = (lower + upper)/2 
 
     p[mid] = single_shortest_path(A, B, mid, p[lower], p[upper], lower, upper)
-    # p[m+mid] = [[0,n] for i in range(0, m)] + p[mid]
-    # p[m+mid] = p[m+mid][0:len(A)+1]
-
+    #print mid
     find_shortest_path(A, B, p, lower, mid)
     find_shortest_path(A, B, p, mid, upper)
 
@@ -35,13 +25,6 @@ def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
 
     arr.fill(0)
 
-    # for i in range(0, n+1):
-    #     arr[mid-2][i] = 0
-    #     arr[mid-1][i] = 0 
-    #     arr[mid][i] = 0   #initialize early row of array. 
-    #     arr[mid+1][i] = 0   #initialize early row of array. PROBABLY NOT NECESSARY BUT POTENTIALLY USEFUL until figuring out off-by-one-errors.
-    #     arr[mid+2][i] = 0   #initialize early row of array. PROBABLY NOT NECESSARY BUT POTENTIALLY USEFUL until figuring out off-by-one-errors.
-
     for i in range(mid+1, m+mid+1):
         for j in range(bottom_path[i][0], top_path[i][1]+1):
             if A[i - 1] == B[j - 1] and (bottom_path[i-1][0] <= j - 1 <= top_path[i-1][1]):   #possible diagnoal and in bounds
@@ -53,14 +36,12 @@ def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
                     arr[i][j] = arr[i][j - 1]
                 elif (bottom_path[i-1][0] <= j <= top_path[i-1][1]): #up in bounds but not left
                     arr[i][j] = arr[i - 1][j]
-    # if mid == 1:
-    #     print "AFTER: \n", arr, mid
     global max_lcs_length
     max_lcs_length = max(max_lcs_length, arr[i][j])
 
     n = len(B)
     m = len(A) 
-    path = [[0,n] for a in range(0, m+1)] #extra row
+    path = [[0,n] for a in range(0, m+1)] 
 
     while i > mid+1 and n > 0:
         if A[i-1] == B[n-1]:# and (bottom_path[i-1][0] <= n - 1 <= top_path[i-1][1]):
@@ -86,7 +67,6 @@ def single_shortest_path(A, B, mid, top_path, bottom_path, top_row, bottom_row):
 #[(Min for lower bound INCLUSIVE, max for upper bound INCLUSIVE)]
 
 
-#OUR BACK TRACKING IS CORRECT
 def backtrace_full_LCS(A, B): 
     m = len(A)
     n = len(B)
@@ -124,7 +104,6 @@ def LCS(A, B):
                 #print i,j
             else:
                 arr[i][j] = max(arr[i - 1][j], arr[i][j - 1])
-    #print "FIRST: \n", arr
     return arr[m][n]
 
 
@@ -133,33 +112,23 @@ def main():
         sys.exit('Usage: `python LCS.py < input`')
 
     for l in sys.stdin:
-    # if 1 == 1:
         global arr 
-        arr = np.zeros((2048, 2048), dtype=int)
+        arr = np.zeros((4001, 4001), dtype=int)
         global max_lcs_length
         max_lcs_length = 0
         A, B = l.split()
-        #A, B = "ACBBBCDCEDBADBBEABBEDAEADEBAEB", "AEBEEAEEABAEEBCACDBBAEABCEDCABEEDACEEC"
         m = len(A)
         n = len(B)
+        if A == B:
+            print m
+            continue
         p = [[] for i in range(0, 2*m)]
-        #Update array for initialization, don't need to return anything from LCS
         LCS(A, B)
-        #break
         p[0] = backtrace_full_LCS(A, B) + [[0,n] for i in range(0, m)]
         p[m] = [[0,n] for i in range(0, m)] + p[0]
-        # print p[0]
-        # print p[m]
         A = A + A
-        # return
         find_shortest_path(A, B, p, 0, m)
-        #TODO: Take out break, print length of shortest path once we test.
-
-        # for i in range(0, m+1):
-        #     print "PATH ", i, " = ", p[i]
-
         print max_lcs_length        #
-        #break
     return
 
 
