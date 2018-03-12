@@ -112,12 +112,16 @@ def main():
         sys.exit('Usage: `python LCS.py < input`')
 
     for l in sys.stdin:
-        
         global max_lcs_length
         max_lcs_length = 0
         A, B = l.split()
         m = len(A)
         n = len(B)
+        if m > n:
+            temp = A
+            A = B
+            B = temp
+            n, m = m, n
         global arr 
         #arr = np.zeros((4001, 4001), dtype=int)
         arr = np.zeros((2*m+1, n+1), dtype=int)
