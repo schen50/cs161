@@ -119,6 +119,9 @@ def main():
         A, B = l.split()
         m = len(A)
         n = len(B)
+        if m == 0 or n == 0:
+            print 0
+            continue
         if A == B:
             print m
             continue
