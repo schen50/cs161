@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 
-arr = np.zeros((2048, 2048), dtype=int)
+arr = np.zeros((4001, 4001), dtype=int)
 
 def LCS(A,B):
 	m = len(A)
@@ -24,6 +24,10 @@ def main():
 		sys.exit('Usage: `python LCS.py < input`')
 	for l in sys.stdin:
 		A,B = l.split()
+		m = len(A)
+		n = len(B)
+		global arr
+		arr = np.zeros((m+2, n+2), dtype=int)
 		print max(LCS(cut(A, i), B) for i in range(0, len(A)))
 	return
 
